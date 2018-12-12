@@ -4,9 +4,10 @@ import { Link } from 'gatsby'
 import Layout from '../components/layout'
 import Image from '../components/image'
 
-const IndexPage = () => (
+const IndexPage = ({ data }) => (
   <Layout>
     <h1>Hi people</h1>
+    <p>{data.allContentfulBlogPost.edges[0].node.body.body}</p>
     <p>Welcome to your new Gatsby site.</p>
     <p>Now go build something great.</p>
     <div style={{ maxWidth: '300px', marginBottom: '1.45rem' }}>
@@ -17,3 +18,18 @@ const IndexPage = () => (
 )
 
 export default IndexPage
+
+export const query = graphql`
+  query {
+    allContentfulBlogPost {
+      edges {
+        node {
+          id
+          body {
+            body
+          }
+        }
+      }
+    }
+  }
+`
