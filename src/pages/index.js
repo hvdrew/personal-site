@@ -4,20 +4,30 @@ import { Link } from 'gatsby'
 import Layout from '../components/layout'
 import Image from '../components/image'
 
-const IndexPage = ({ data }) => (
-  <Layout>
-    <h1>Hi people</h1>
-    <p>{data.allContentfulBlogPost.edges[0].node.body.body}</p>
-    <p>Welcome to your new Gatsby site.</p>
-    <p>Now go build something great.</p>
-    <div style={{ maxWidth: '300px', marginBottom: '1.45rem' }}>
-      <Image />
-    </div>
-    <Link to="/page-2/">Go to page 2</Link>
-  </Layout>
-)
+export default ({ data }) => {
 
-export default IndexPage
+  let slugs = data.allContentfulBlogPost.edges.map((item) => {
+    return <a href={`/${item.node.slug}`}>{item.node.title}</a>
+  })
+
+  console.log(slugs)
+
+  return (
+    <Layout>
+      {slugs}
+      <h1>Hi people</h1>
+      <p dangerouslySetInnerHTML={{
+        __html: data.allContentfulBlogPost.edges[0].node.body.childMarkdownRemark.html
+      }}></p>
+      <p>Welcome to your new Gatsby site.</p>
+      <p>Now go build something great.</p>
+      <div style={{ maxWidth: '300px', marginBottom: '1.45rem' }}>
+        <Image />
+      </div>
+      <Link to="/page-2/">Go to page 2</Link>
+    </Layout>
+  )
+}
 
 export const query = graphql`
   query {
@@ -25,11 +35,15 @@ export const query = graphql`
       edges {
         node {
           id
+          slug
+          title
           body {
-            body
+            childMarkdownRemark {
+              html
+            }
           }
         }
       }
     }
   }
-`
+  `
