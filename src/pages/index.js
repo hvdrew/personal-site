@@ -1,5 +1,5 @@
 import React from 'react'
-import { Link } from 'gatsby'
+import { Link, graphql } from 'gatsby'
 
 import Layout from '../components/layout'
 import Image from '../components/image'
@@ -7,14 +7,14 @@ import Image from '../components/image'
 export default ({ data }) => {
 
   let slugs = data.allContentfulBlogPost.edges.map((item) => {
-    return <Link to={`/${item.node.slug}`}>{item.node.title}</Link>
+    return <li><Link to={`/${item.node.slug}`}>{item.node.title}</Link></li>
   })
-
-  console.log(slugs)
 
   return (
     <Layout>
-      {slugs}
+      <ul>
+        {slugs}
+      </ul>
       <h1>Hi people</h1>
       <p dangerouslySetInnerHTML={{
         __html: data.allContentfulBlogPost.edges[0].node.body.childMarkdownRemark.html
