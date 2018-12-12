@@ -7,7 +7,7 @@ import Image from '../components/image'
 export default ({ data }) => {
 
   let slugs = data.allContentfulBlogPost.edges.map((item) => {
-    return <a href={`/${item.node.slug}`}>{item.node.title}</a>
+    return <Link to={`/${item.node.slug}`}>{item.node.title}</Link>
   })
 
   console.log(slugs)
